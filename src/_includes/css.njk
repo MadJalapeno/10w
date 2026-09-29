@@ -1,0 +1,116 @@
+<style>
+  :root {
+    --bg: #020408;
+    --grid: rgba(0,255,100,0.04);
+    --green: #00ff64;
+    --green-dim: #00aa44;
+    --green-dark: #003318;
+    --red: #ff2244;
+    --amber: #ffaa00;
+    --text: #b0ffcc;
+    --muted: #2a5a3a;
+  }
+
+  body {
+    font-family: 'Share Tech Mono', monospace;
+    cursor: crosshair;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Grid background */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes glitch {
+    0%, 95%, 100% { clip-path: none; transform: none; }
+    96% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translateX(-4px); }
+    97% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translateX(4px); }
+    98% { clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%); transform: translateX(-2px); }
+    99% { clip-path: none; transform: translateX(2px); }
+  }
+
+  @keyframes flicker {
+    0%, 97%, 100% { opacity: 1; }
+    98% { opacity: 0.92; }
+    99% { opacity: 0.97; }
+  }
+
+  .logo-text {
+    animation: glitch 8s ease-in-out infinite;
+  }
+
+  body {
+    animation: flicker 10s ease-in-out infinite;
+  }
+
+  .pulse-dot {
+    animation: blink 1.2s ease-in-out infinite;
+  }
+
+  .dot {
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  .dot.amber {
+    animation-delay: 0.4s;
+  }
+
+  .dot.red {
+    animation-delay: 0.7s;
+  }
+
+  .hero-label {
+    animation: fadeIn 1s ease 0.3s both;
+  }
+
+  .hero h1 {
+    animation: fadeIn 1s ease 0.5s both;
+  }
+
+  .hero-desc {
+    animation: fadeIn 1s ease 0.8s both;
+  }
+
+  .ticker-track {
+    animation: ticker 30s linear infinite;
+  }
+</style>

@@ -1,0 +1,59 @@
+<footer class="relative z-5 text-center py-5 text-xs tracking-widest text-[#2a5a3a] border-t border-[#2a5a3a]">
+  &copy; 10W NETWORK SYSTEMS — ALL ACTIVITY MONITORED AND LOGGED — NODE REF: <span id="nodeRef"></span>
+</footer>
+
+<script>
+  // Clock
+  function tick() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toUTCString().slice(17,25) + ' UTC';
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Random node ref
+  document.getElementById('nodeRef').textContent =
+    Math.random().toString(36).slice(2,10).toUpperCase();
+
+  // Node data
+  const nodes = [
+    { domain: '10w.dev',    loc: 'LOS ANGELES, USA',    up: '99.94%', lat: '9ms',   status: 'green' },
+    { domain: '10w.us',   loc: 'NEW YORK, USA',        up: '99.98%', lat: '7ms',   status: 'green' },
+    { domain: '10w.uk',   loc: 'LONDON, UK',           up: '99.97%', lat: '8ms',   status: 'green' },
+    { domain: '10w.fi',    loc: 'HELSINKI, FI',         up: '100%',   lat: '5ms',   status: 'green' },
+    { domain: '10w.wtf',   loc: 'HONG KONG',            up: '99.81%', lat: '22ms',  status: 'green' },
+    { domain: '10w.au',    loc: 'SYDNEY, AU',           up: '91.22%', lat: '112ms', status: 'red'   },
+    { domain: '10w.email',   loc: 'SÃO PAULO, BR',        up: '99.55%', lat: '33ms',  status: 'green' },
+  ];
+
+  const grid = document.getElementById('nodeGrid');
+  nodes.forEach(n => {
+    const card = document.createElement('div');
+    card.className = 'bg-opacity-95 p-3.5 transition-colors duration-200 relative overflow-hidden hover:bg-opacity-95 group' + (n.status === 'red' ? ' bg-[rgba(0,30,12,0.95)]' : ' bg-[#020408]');
+    card.innerHTML = `
+      <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-[#00ff64] opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:shadow-[0_0_8px_#00ff64]"></div>
+      <div class="font-['Orbitron'] font-bold text-xs tracking-widest text-[#00ff64] mb-1.5">${n.domain}</div>
+      <div class="text-xs text-[#2a5a3a] tracking-widest mb-2">// ${n.loc}</div>
+      <div class="flex gap-3 text-xs tracking-widest text-[#00aa44]">
+        <div class="flex items-center gap-1"><span class="dot ${n.status === 'red' ? 'red' : ''} inline-block w-1 h-1 rounded-full ${n.status === 'red' ? 'bg-[#ff2244] shadow-[0_0_4px_#ff2244]' : 'bg-[#00ff64] shadow-[0_0_4px_#00ff64]'}"></span>${n.status.toUpperCase()}</div>
+        <div class="text-[#00aa44]">UP ${n.up}</div>
+        <div class="text-[#00aa44]">LAT ${n.lat}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Subtle random packet counter updates in ticker
+  const items = document.querySelectorAll('.ticker-item');
+  setInterval(() => {
+    const rate = (Math.random() * 0.4 + 1.2).toFixed(1);
+    items.forEach(el => {
+      if (el.textContent.startsWith('PACKETS')) {
+        el.textContent = `PACKETS ROUTED: ${rate}M/sec`;
+      }
+    });
+  }, 2000);
+</script>
+</body>
+</html>
